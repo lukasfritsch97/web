@@ -127,53 +127,60 @@ footer{padding:2rem 0;text-align:center;color:var(--muted)}
 <footer>
   <div class="muted-small">© 2025 Lukáš Fritsch — Inteligentní kurník</div>
 </footer>
-<section id="foto">
-  <h2>Galerie</h2>
-  <div class="card">
-    <div class="dropdown">
-      <button class="dropdown-btn">Vyber fotku ▼</button>
-      <div class="dropdown-content" id="photoDropdown">
-        <!-- Dynamické fotky -->
-      </div>
-    </div>
-    <div class="gallery" id="photoGallery">
-      <!-- Zobrazené fotky -->
-    </div>
-  </div>
-</section>
-
 <script>
-// Dynamické seznamy fotek
+// Přepínání motivu
+const root=document.documentElement;
+const themeToggle=document.getElementById('themeToggle');
+function setTheme(t){
+  if(t==='dark'){
+    root.setAttribute('data-theme','dark');
+    themeToggle.textContent='☀️';
+    themeToggle.setAttribute('aria-pressed','true');
+  }else{
+    root.removeAttribute('data-theme');
+    themeToggle.textContent='🌙';
+    themeToggle.setAttribute('aria-pressed','false');
+  }
+  try{localStorage.setItem('ik_theme',t);}catch(e){}
+}
+(function(){
+  const saved=localStorage.getItem('ik_theme');
+  if(saved) return setTheme(saved);
+  const prefersDark=window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  setTheme(prefersDark?'dark':'light');
+})();
+themeToggle.addEventListener('click',()=>{const isDark=root.getAttribute('data-theme')==='dark';setTheme(isDark?'light':'dark');});
+
+// Dynamický seznam dokumentů
+const docs = [
+  {name:"Zadání práce DOCX", date:"2025-09-20", url:"#"},
+  {name:"Dokumentace verze 1 PDF", date:"2025-09-25", url:"#"}
+];
+const docDropdown=document.getElementById('docDropdown');
+docs.forEach(d=>{
+  const a=document.createElement('a');
+  a.href=d.url;
+  a.textContent=`${d.name} (${d.date})`;
+  docDropdown.appendChild(a);
+});
+
+// Dynamický seznam fotek
 const photos = [
   {title:"Kurník 1", date:"2025-09-21", url:"https://picsum.photos/seed/kurnik1/800/600"},
   {title:"Kurník 2", date:"2025-09-22", url:"https://picsum.photos/seed/kurnik2/800/600"},
   {title:"Kurník 3", date:"2025-09-23", url:"https://picsum.photos/seed/kurnik3/800/600"}
 ];
 
-const photoDropdown = document.getElementById('photoDropdown');
 const photoGallery = document.getElementById('photoGallery');
 
-// Přidáme do dropdown menu
-photos.forEach((p,index)=>{
-  const a=document.createElement('a');
-  a.href="#";
-  a.textContent=`${p.title} (${p.date})`;
-  a.addEventListener('click', e=>{
-    e.preventDefault();
-    showPhoto(index);
-  });
-  photoDropdown.appendChild(a);
-});
-
-// Zobrazíme fotku v galerii
-function showPhoto(index){
-  photoGallery.innerHTML="";
+// Zobrazíme všechny fotky v galerii
+photos.forEach(p=>{
   const img=document.createElement('img');
-  img.src=photos[index].url;
-  img.alt=photos[index].title;
+  img.src=p.url;
+  img.alt=p.title;
+  img.title=p.date;
   photoGallery.appendChild(img);
-}
-
-// Načteme první fotku automaticky
-showPhoto(0);
+});
 </script>
+</body>
+</html>

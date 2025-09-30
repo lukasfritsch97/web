@@ -6,8 +6,8 @@
 <title>Inteligentní kurník — Maturitní projekt</title>
 <style>
 :root{
-  --bg:#e0f0ff;
-  --surface:#f7faff;
+  --bg:#ffffff;
+  --surface:#f7f9fc;
   --text:#0f1724;
   --muted:#6b7280;
   --accent:#0ea5e9;
@@ -26,27 +26,54 @@
   --shadow: 0 8px 30px rgba(2,6,23,0.6);
 }
 *{box-sizing:border-box}
-html,body{height:100%;scroll-behavior:smooth}
+html,body{height:100%}
 body{margin:0;font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;background:linear-gradient(180deg,var(--bg), var(--surface));color:var(--text);line-height:1.45;transition: background .35s ease, color .35s ease;}
 .container{max-width:var(--max-width);margin:0 auto;padding:1rem}
-header{position:sticky;top:0;z-index:100;backdrop-filter: blur(8px);background: linear-gradient(180deg, rgba(224,240,255,0.95), rgba(224,240,255,0.85));border-bottom:1px solid rgba(0,0,0,0.08);}
-[data-theme="dark"] header{background:linear-gradient(180deg, rgba(12,18,28,0.85), rgba(12,18,28,0.7));border-bottom:1px solid rgba(255,255,255,0.03);}
+header{position:sticky;top:0;z-index:40;backdrop-filter: blur(6px);background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.45));border-bottom:1px solid rgba(0,0,0,0.04);}
+[data-theme="dark"] header{background:linear-gradient(180deg, rgba(12,18,28,0.7), rgba(12,18,28,0.55));border-bottom:1px solid rgba(255,255,255,0.03);}
 .nav-row{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem}
-.brand{display:flex;align-items:center;gap:.7rem;cursor:pointer}
+.brand{display:flex;align-items:center;gap:.7rem}
 .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7dd3fc);display:grid;place-items:center;color:white;font-weight:700;box-shadow:var(--shadow);}
 .brand h1{font-size:1.05rem;margin:0}
 nav{display:flex;gap:1rem;align-items:center;position:relative}
-nav a, nav button.dropdown-btn{color:var(--text);text-decoration:none;padding:.45rem .6rem;border-radius:8px;font-weight:600;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:0.3rem;}
+nav a, nav button.dropdown-btn{color:var(--text);text-decoration:none;padding:.45rem .6rem;border-radius:8px;font-weight:600;background:transparent;border:none;cursor:pointer;}
 nav a:hover, nav button.dropdown-btn:hover{background:var(--glass);}
 .menu-btn{display:none;background:transparent;border:0;padding:.4rem;border-radius:8px}
+
 /* Dropdown menu */
-.dropdown{position:relative}
-.dropdown-content{display:none;position:absolute;top:100%;left:0;background:var(--surface);min-width:240px;box-shadow:var(--shadow);border-radius:var(--radius);overflow:hidden;flex-direction:column;z-index:50}
-.dropdown-content a{display:block;padding:.6rem 1rem;text-decoration:none;color:var(--text)}
-.dropdown-content a:hover{background:var(--glass)}
-.dropdown:hover .dropdown-content{display:flex}
+.dropdown{
+  position:relative;
+}
+.dropdown-content{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  background:var(--surface);
+  min-width:180px;
+  box-shadow:var(--shadow);
+  border-radius:var(--radius);
+  overflow:hidden;
+  z-index:50;
+  flex-direction:column;
+}
+.dropdown-content a{
+  display:block;
+  padding:.5rem .8rem;
+  text-decoration:none;
+  color:var(--text);
+}
+.dropdown-content a:hover{
+  background:var(--glass);
+}
+.dropdown:hover .dropdown-content{
+  display:flex;
+}
+
+/* Hero, cards, gallery, footer styling remain unchanged */
 .hero{padding:2rem 0}
 .hero-card{background:var(--surface);padding:1.6rem;border-radius:var(--radius);box-shadow:var(--shadow)}
+.tag{display:inline-block;padding:.25rem .6rem;border-radius:999px;background:rgba(0,0,0,0.04);font-size:.8rem;color:var(--muted);margin-bottom:.5rem}
 h2{margin:.25rem 0 .5rem 0;font-size:1.6rem}
 p.lead{color:var(--muted);margin:0}
 .stats{display:flex;gap:.6rem;margin-top:.9rem;flex-wrap:wrap}
@@ -66,10 +93,12 @@ footer{padding:2rem 0;text-align:center;color:var(--muted)}
 <body>
 <header>
   <div class="container nav-row">
-    <div class="brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <div class="brand">
       <div class="logo">IK</div>
-      <h1>Inteligentní kurník</h1>
-      <img src="https://cdn-icons-png.flaticon.com/32/616/616408.png" alt="slepice" style="width:24px;height:24px;cursor:pointer" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <div>
+        <h1>Inteligentní kurník</h1>
+        <div class="muted-small">Maturitní projekt • Lukáš Fritsch</div>
+      </div>
     </div>
     <nav>
       <a href="#home">Domů</a>
@@ -77,7 +106,7 @@ footer{padding:2rem 0;text-align:center;color:var(--muted)}
       <div class="dropdown">
         <button class="dropdown-btn">Dokumentace ▼</button>
         <div class="dropdown-content" id="docDropdown">
-          <!-- Dynamické dokumenty -->
+          <!-- Dynamické dokumenty zde -->
         </div>
       </div>
       <a href="#zadani">Zadání</a>
@@ -98,6 +127,14 @@ footer{padding:2rem 0;text-align:center;color:var(--muted)}
        <strong>Vedoucí maturitní práce:</strong> PaedDr. Petr Šeda<br>
        <strong>Kategorie:</strong> Elektro</p>
     <p class="lead"><strong>Téma:</strong> Maturitní práce je zaměřena na návrh a realizaci modelu inteligentního kurníku, který bude plně automatizovaný a řízen mikropočítačem Arduino. Systém bude zajišťovat otevírání a zavírání dvířek, monitorovat počet slepic uvnitř kurníku a detekovat snesená vejce. Součástí modelu bude také automatické krmítko a osvětlení řízené podle aktuálního času. Napájení zařízení bude řešeno ze sítě 230 V / 50 Hz. Celý systém bude navržen tak, aby tvořil funkční celek, ve kterém budou všechny jednotlivé části správně spolupracovat.</p>
+    <div class="stats">
+      <div class="stat"><span class="muted-small">Součástí</span><strong>Arduino</strong></div>
+      <div class="stat"><span class="muted-small">Automatizace</span><strong>100 %</strong></div>
+      <div class="stat"><span class="muted-small">Školní rok</span><strong>2025/26</strong></div>
+    </div>
+    <div class="gallery" style="margin-top:1rem">
+      <img src="https://picsum.photos/seed/kurnik_home/800/600" alt="Úvodní foto kurníku">
+    </div>
   </div>
 </section>
 
@@ -127,8 +164,9 @@ footer{padding:2rem 0;text-align:center;color:var(--muted)}
 <footer>
   <div class="muted-small">© 2025 Lukáš Fritsch — Inteligentní kurník</div>
 </footer>
+</main>
+
 <script>
-// Přepínání motivu
 const root=document.documentElement;
 const themeToggle=document.getElementById('themeToggle');
 function setTheme(t){
@@ -149,9 +187,13 @@ function setTheme(t){
   const prefersDark=window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   setTheme(prefersDark?'dark':'light');
 })();
-themeToggle.addEventListener('click',()=>{const isDark=root.getAttribute('data-theme')==='dark';setTheme(isDark?'light':'dark');});
+function toggleTheme(){
+  const isDark=root.getAttribute('data-theme')==='dark';
+  setTheme(isDark?'light':'dark');
+}
+themeToggle.addEventListener('click',toggleTheme);
 
-// Dynamický seznam dokumentů
+// Dynamický seznam dokumentů v drop-down
 const docs = [
   {name:"Zadání práce DOCX", date:"2025-09-20", url:"#"},
   {name:"Dokumentace verze 1 PDF", date:"2025-09-25", url:"#"}
@@ -162,24 +204,6 @@ docs.forEach(d=>{
   a.href=d.url;
   a.textContent=`${d.name} (${d.date})`;
   docDropdown.appendChild(a);
-});
-
-// Dynamický seznam fotek
-const photos = [
-  {title:"Kurník 1", date:"2025-09-21", url:"https://picsum.photos/seed/kurnik1/800/600"},
-  {title:"Kurník 2", date:"2025-09-22", url:"https://picsum.photos/seed/kurnik2/800/600"},
-  {title:"Kurník 3", date:"2025-09-23", url:"https://picsum.photos/seed/kurnik3/800/600"}
-];
-
-const photoGallery = document.getElementById('photoGallery');
-
-// Zobrazíme všechny fotky v galerii
-photos.forEach(p=>{
-  const img=document.createElement('img');
-  img.src=p.url;
-  img.alt=p.title;
-  img.title=p.date;
-  photoGallery.appendChild(img);
 });
 </script>
 </body>

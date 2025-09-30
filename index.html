@@ -72,7 +72,6 @@
         <a href="#home">Domů</a>
         <a href="#foto">Foto</a>
         <a href="#dokumentace">Dokumentace</a>
-        <a href="#verze">Verze dokumentů</a>
         <a href="#zadani">Zadání</a>
         <button id="themeToggle" class="btn" aria-pressed="false">🌙</button>
       </nav>
@@ -104,20 +103,19 @@
 
     <section id="foto">
       <h2>Galerie</h2>
-      <div class="card">
-        <p class="muted-small">Postupně nahrávej fotografie modelu inteligentního kurníku. Každá fotka by měla mít datum nahrání.</p>
-        <div class="gallery" id="photoGallery">
-          <!-- Dynamicky přidávat obrázky s datem -->
-        </div>
+      <div class="card" id="photoGallery">
+        <p class="muted-small">Sem budou postupně přidávány fotografie modelu inteligentního kurníku s datem nahrání.</p>
+        <!-- Dynamické fotky zde -->
       </div>
     </section>
 
     <section id="dokumentace">
       <h2>Dokumentace</h2>
       <div class="card" id="docList">
-        <p class="muted-small">Zde budou postupně přidávány verze dokumentů. Kliknutím na odkaz si můžete stáhnout konkrétní verzi spolu s datem nahrání.</p>
+        <p class="muted-small">Seznam dokumentů ke stažení, seřazen od nejnovějšího po nejstarší. Každý dokument obsahuje datum nahrání.</p>
         <ul>
-          <!-- Dynamicky přidávat verze dokumentů -->
+          <li>Zadání práce v DOCX <span class='muted-small'>(2025-09-20)</span></li>
+          <li>Dokumentace verze 1 PDF <span class='muted-small'>(2025-09-25)</span></li>
         </ul>
       </div>
     </section>
@@ -169,30 +167,6 @@
       setTheme(isDark?'light':'dark');
     }
     themeToggle.addEventListener('click',toggleTheme);
-
-    // Placeholder data for photos and documents (can be dynamically updated)
-    const photoGallery = document.getElementById('photoGallery');
-    const docList = document.querySelector('#docList ul');
-
-    const photos = [
-      {src:'https://picsum.photos/seed/kurnik1/800/600', date:'2025-09-30'},
-      {src:'https://picsum.photos/seed/kurnik2/800/600', date:'2025-10-02'}
-    ];
-    photos.forEach(p=>{
-      const div = document.createElement('div');
-      div.innerHTML=`<img src='${p.src}' alt='Foto kurníku'><small class='muted-small'>Nahráno: ${p.date}</small>`;
-      photoGallery.appendChild(div);
-    });
-
-    const documents = [
-      {name:'Zadání práce v DOCX', url:'#', date:'2025-09-20'},
-      {name:'Dokumentace verze 1 PDF', url:'#', date:'2025-09-25'}
-    ];
-    documents.forEach(d=>{
-      const li = document.createElement('li');
-      li.innerHTML=`<a href='${d.url}' class='btn'>Stáhnout</a> ${d.name} <span class='muted-small'>(${d.date})</span>`;
-      docList.appendChild(li);
-    });
   </script>
 </body>
 </html>

@@ -1,99 +1,156 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ochránce Slepiš</title>
   <style>
-    /* Reset & základ */
+    :root {
+      --primary: #f4a261;
+      --secondary: #264653;
+      --accent: #2a9d8f;
+      --light: #fefae0;
+      --dark: #1d3557;
+      --danger: #e76f51;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
       font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
       line-height: 1.6;
-      background: #fdfdfd;
-      color: #333;
       scroll-behavior: smooth;
     }
 
     header {
-      background: #f4a261;
-      padding: 60px 20px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      padding: 100px 20px 80px;
       text-align: center;
-      color: #fff;
     }
 
     header h1 {
-      font-size: 3rem;
+      font-size: 3.5rem;
       margin-bottom: 10px;
     }
 
     header p {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
 
     nav {
-      background: #264653;
-      padding: 10px 20px;
-      text-align: center;
+      background: var(--secondary);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: center;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
     }
 
     nav a {
       color: white;
-      margin: 0 15px;
+      margin: 0 20px;
       text-decoration: none;
       font-weight: bold;
-      transition: color 0.3s;
+      transition: 0.3s;
     }
 
     nav a:hover {
-      color: #e9c46a;
+      color: var(--primary);
     }
 
     section {
-      padding: 60px 20px;
-      max-width: 900px;
+      padding: 80px 20px;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
     section h2 {
-      color: #2a9d8f;
-      font-size: 2rem;
-      margin-bottom: 20px;
+      font-size: 2.5rem;
+      color: var(--accent);
+      margin-bottom: 30px;
+      text-align: center;
     }
 
-    footer {
-      background: #264653;
-      color: #fff;
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      padding: 30px 20px;
-      margin-top: 40px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      flex: 1 1 280px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card svg {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 20px;
+      fill: var(--primary);
+    }
+
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
     }
 
     .button {
       display: inline-block;
-      padding: 12px 24px;
-      background: #e76f51;
+      padding: 14px 28px;
+      background: var(--danger);
       color: white;
+      border-radius: 8px;
       text-decoration: none;
-      border-radius: 5px;
-      margin-top: 20px;
+      font-weight: bold;
       transition: background 0.3s;
+      margin-top: 30px;
     }
 
     .button:hover {
       background: #d65a3b;
     }
 
+    footer {
+      background: var(--secondary);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
     @media (max-width: 768px) {
       header h1 {
-        font-size: 2.2rem;
+        font-size: 2.4rem;
+      }
+
+      nav {
+        flex-direction: column;
+      }
+
+      nav a {
+        margin: 10px 0;
+      }
+
+      .card {
+        flex: 1 1 100%;
       }
     }
   </style>
@@ -102,51 +159,72 @@
 
   <header>
     <h1>Ochránce Slepiš</h1>
-    <p>Bojujeme za práva každého zobáčku</p>
+    <p>Bojujeme za důstojnost každého zobáčku</p>
   </header>
 
   <nav>
     <a href="#o-nas">O nás</a>
-    <a href="#mise">Naše mise</a>
+    <a href="#sluzby">Naše poslání</a>
     <a href="#kontakt">Kontakt</a>
   </nav>
 
   <section id="o-nas">
-    <h2>O nás</h2>
-    <p>
-      Jsme nezisková organizace Ochránce Slepiš, která vznikla z lásky ke slepicím. Naším cílem je zajistit jim lepší podmínky života, bezpečí, a více prostoru pro přirozené chování.
-    </p>
-    <p>
-      Slepiší blaho je naší prioritou. Podporujeme útulky, vzděláváme veřejnost a bojujeme proti klecovým chovům.
-    </p>
+    <h2>Kdo jsme</h2>
+    <div class="content">
+      <div class="card">
+        <svg viewBox="0 0 64 64">
+          <path d="M32 2C16.5 2 4 14.5 4 30s12.5 28 28 28 28-12.5 28-28S47.5 2 32 2zm0 52c-13.3 0-24-10.7-24-24S18.7 6 32 6s24 10.7 24 24-10.7 24-24 24z"/>
+          <path d="M32 18a12 12 0 100 24 12 12 0 000-24z"/>
+        </svg>
+        <h3>Srdce pro zvířata</h3>
+        <p>Jsme organizace zaměřená na ochranu slepic v ČR. Vzděláváme, zachraňujeme a vytváříme lepší podmínky pro život.</p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 64 64">
+          <path d="M32 6l26 16v20c0 10-10 20-26 20S6 52 6 42V22L32 6z"/>
+        </svg>
+        <h3>Bezpečný domov</h3>
+        <p>Spolupracujeme s útulky, farmami a komunitami na zajištění bezpečného a přirozeného prostředí pro slepice.</p>
+      </div>
+    </div>
   </section>
 
-  <section id="mise">
-    <h2>Naše mise</h2>
-    <p>
-      Věříme, že každá slepice má právo na důstojný život. Bojujeme za:
-    </p>
-    <ul>
-      <li>Lepší životní podmínky ve farmách</li>
-      <li>Osvětu o chovu slepic</li>
-      <li>Podporu lokálních iniciativ a útulků</li>
-      <li>Zákaz klecových chovů</li>
-    </ul>
-    <a href="https://mp.spse.cz/" class="button" target="_blank">Přidej se k nám</a>
+  <section id="sluzby">
+    <h2>Naše poslání</h2>
+    <div class="content">
+      <div class="card">
+        <svg viewBox="0 0 64 64">
+          <path d="M8 12h48v8H8zM8 28h48v8H8zM8 44h48v8H8z"/>
+        </svg>
+        <h3>Osvěta</h3>
+        <p>Pořádáme přednášky, workshopy a kampaně o etickém chovu a ochraně slepic.</p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 64 64">
+          <path d="M32 6l12 36H20L32 6z"/>
+        </svg>
+        <h3>Akce a protesty</h3>
+        <p>Účastníme se veřejných akcí, demonstrací a petičních iniciativ za lepší zákony.</p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="30"/>
+          <path d="M16 32h32M32 16v32"/>
+        </svg>
+        <h3>Připoj se</h3>
+        <p>Každý hlas pomáhá. Staň se členem komunity, dobrovolníkem nebo dárce.</p>
+        <a href="https://mp.spse.cz/" class="button" target="_blank">Chci pomoct</a>
+      </div>
+    </div>
   </section>
 
   <section id="kontakt">
     <h2>Kontakt</h2>
-    <p>Chceš nás podpořit, přidat se nebo se jen zeptat?</p>
-    <p><strong>Email:</strong> info@ochrance-slepis.cz</p>
-    <p><strong>Telefon:</strong> +420 123 456 789</p>
-    <p><strong>Sídlo:</strong> Kurníková 12, 110 00 Praha</p>
-  </section>
-
-  <footer>
-    &copy; 2025 Ochránce Slepiš | Všechna práva vyhrazena
-  </footer>
-
-</body>
-</html>
-
+    <div class="content">
+      <div class="card">
+        <h3>Napiš nám</h3>
+        <p><strong>Email:</strong> info@ochrance-slepis.cz</p>
+        <p><strong>Telefon:</strong> +420 777 666 555</p>
+        <p><strong>Adresa:</strong> Kurníková 12, Praha 1</p>
+      </div>
+    </div>

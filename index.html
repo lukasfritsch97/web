@@ -1,230 +1,396 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ochránce Slepiš</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chytrý kurník — Maturitní projekt</title>
+  <!--
+    Jednopage HTML soubor obsahující: HTML + CSS + JS
+    - Responzivní layout
+    - Tmavý/světlý režim (persistuje v localStorage)
+    - Navigace + hamburger pro mobil
+    - Galerie (nahraď obrázky svými soubory)
+    - Sekce Dokumentace a Zadání
+    - Malé animační a přístupové vylepšení
+  -->
   <style>
-    :root {
-      --primary: #f4a261;
-      --secondary: #264653;
-      --accent: #2a9d8f;
-      --light: #fefae0;
-      --dark: #1d3557;
-      --danger: #e76f51;
+    :root{
+      --bg:#ffffff;
+      --surface:#f7f9fc;
+      --text:#0f1724;
+      --muted:#6b7280;
+      --accent:#0ea5e9;
+      --glass: rgba(255,255,255,0.6);
+      --radius:12px;
+      --shadow: 0 6px 20px rgba(2,6,23,0.08);
+      --max-width:1100px;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    [data-theme="dark"]{
+      --bg:#0b1220;
+      --surface:#0f1724;
+      --text:#e6eef8;
+      --muted:#9aa6b2;
+      --accent:#ffb86b;
+      --glass: rgba(255,255,255,0.03);
+      --shadow: 0 8px 30px rgba(2,6,23,0.6);
     }
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--light);
-      color: var(--dark);
-      line-height: 1.6;
-      scroll-behavior: smooth;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:linear-gradient(180deg,var(--bg), var(--surface));
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      transition: background .35s ease, color .35s ease;
     }
 
-    header {
-      background: linear-gradient(to right, var(--primary), var(--accent));
-      color: white;
-      padding: 100px 20px 80px;
-      text-align: center;
+    .container{max-width:var(--max-width);margin:0 auto;padding:1rem}
+
+    /* Header */
+    header{
+      position:sticky;top:0;z-index:40;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.45));
+      border-bottom:1px solid rgba(0,0,0,0.04);
+    }
+    [data-theme="dark"] header{
+      background:linear-gradient(180deg, rgba(12,18,28,0.7), rgba(12,18,28,0.55));
+      border-bottom:1px solid rgba(255,255,255,0.03);
+    }
+    .nav-row{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem}
+    .brand{display:flex;align-items:center;gap:.7rem}
+    .logo{
+      width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7dd3fc);display:grid;place-items:center;color:white;font-weight:700;box-shadow:var(--shadow);
+    }
+    .brand h1{font-size:1.05rem;margin:0}
+    nav{display:flex;gap:1rem;align-items:center}
+    nav a{color:var(--text);text-decoration:none;padding:.45rem .6rem;border-radius:8px;font-weight:600}
+    nav a:hover{background:var(--glass)}
+
+    /* Hamburger */
+    .menu-btn{display:none;background:transparent;border:0;padding:.4rem;border-radius:8px}
+    .menu-btn:focus{outline:2px solid var(--accent)}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:1.5rem;align-items:center;padding:2rem 0}
+    .hero-card{background:var(--surface);padding:1.6rem;border-radius:var(--radius);box-shadow:var(--shadow)}
+    .tag{display:inline-block;padding:.25rem .6rem;border-radius:999px;background:rgba(0,0,0,0.04);font-size:.8rem;color:var(--muted);margin-bottom:.5rem}
+    h2{margin:.25rem 0 .5rem 0;font-size:1.6rem}
+    p.lead{color:var(--muted);margin:0}
+
+    /* Stat cards */
+    .stats{display:flex;gap:.6rem;margin-top:.9rem}
+    .stat{flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.45));padding:.7rem;border-radius:10px;text-align:center}
+    [data-theme="dark"] .stat{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))}
+    .stat strong{display:block;font-size:1.1rem}
+    .muted{color:var(--muted)}
+
+    /* Sections */
+    section{margin:2rem 0}
+    .card{background:var(--surface);padding:1.2rem;border-radius:12px;box-shadow:var(--shadow)}
+
+    /* Gallery */
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem}
+    .gallery img{width:100%;height:200px;object-fit:cover;border-radius:10px;display:block}
+
+    /* Docs */
+    .doc-grid{display:grid;grid-template-columns:1fr 320px;gap:1rem}
+    .doc-list{display:flex;flex-direction:column;gap:.6rem}
+    .doc-item{padding:.7rem;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.45));display:flex;justify-content:space-between;align-items:center}
+
+    /* Footer */
+    footer{padding:2rem 0;text-align:center;color:var(--muted)}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .doc-grid{grid-template-columns:1fr}
+      .gallery{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:600px){
+      nav{display:none}
+      .menu-btn{display:block}
+      .gallery img{height:150px}
+      .logo{width:40px;height:40px}
     }
 
-    header h1 {
-      font-size: 3.5rem;
-      margin-bottom: 10px;
-    }
+    /* Mobile slide-in menu */
+    .mobile-menu{position:fixed;right:0;top:0;height:100vh;width:280px;background:var(--surface);box-shadow: -12px 0 30px rgba(2,6,23,0.12);transform:translateX(100%);transition:transform .28s cubic-bezier(.2,.9,.25,1);padding:1.2rem}
+    .mobile-menu.open{transform:translateX(0)}
+    .mobile-menu a{display:block;padding:.8rem;border-radius:8px;color:var(--text);text-decoration:none}
 
-    header p {
-      font-size: 1.3rem;
-    }
+    /* small helpers */
+    .muted-small{font-size:.85rem;color:var(--muted)}
+    .btn{display:inline-block;padding:.5rem .9rem;border-radius:9px;border:0;background:var(--accent);color:white;font-weight:700;text-decoration:none}
+    .ghost{background:transparent;border:1px solid rgba(0,0,0,0.06)}
 
-    nav {
-      background: var(--secondary);
-      padding: 12px 20px;
-      display: flex;
-      justify-content: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    nav a {
-      color: white;
-      margin: 0 20px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    nav a:hover {
-      color: var(--primary);
-    }
-
-    section {
-      padding: 80px 20px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    section h2 {
-      font-size: 2.5rem;
-      color: var(--accent);
-      margin-bottom: 30px;
-      text-align: center;
-    }
-
-    .content {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      padding: 30px;
-      flex: 1 1 280px;
-      transition: transform 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-10px);
-    }
-
-    .card svg {
-      width: 60px;
-      height: 60px;
-      margin-bottom: 20px;
-      fill: var(--primary);
-    }
-
-    .card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 14px 28px;
-      background: var(--danger);
-      color: white;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s;
-      margin-top: 30px;
-    }
-
-    .button:hover {
-      background: #d65a3b;
-    }
-
-    footer {
-      background: var(--secondary);
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2.4rem;
-      }
-
-      nav {
-        flex-direction: column;
-      }
-
-      nav a {
-        margin: 10px 0;
-      }
-
-      .card {
-        flex: 1 1 100%;
-      }
-    }
   </style>
 </head>
 <body>
+  <header aria-label="Hlavní navigace">
+    <div class="container nav-row">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">CK</div>
+        <div>
+          <h1>Chytrý kurník</h1>
+          <div class="muted-small">Maturitní projekt • Web + HW</div>
+        </div>
+      </div>
 
-  <header>
-    <h1>Ochránce Slepiš</h1>
-    <p>Bojujeme za důstojnost každého zobáčku</p>
+      <nav role="navigation" aria-label="Hlavní menu">
+        <a href="#home">Domů</a>
+        <a href="#foto">Foto</a>
+        <a href="#dokumentace">Dokumentace</a>
+        <a href="#zadani">Zadání</a>
+        <button id="themeToggle" class="btn" aria-pressed="false" title="Přepnout tmavý/světlý režim">🌙</button>
+      </nav>
+
+      <button class="menu-btn" id="openMenu" aria-label="Otevřít menu">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
   </header>
 
-  <nav>
-    <a href="#o-nas">O nás</a>
-    <a href="#sluzby">Naše poslání</a>
-    <a href="#kontakt">Kontakt</a>
-  </nav>
+  <!-- Mobile menu -->
+  <aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <button id="closeMenu" class="menu-btn" aria-label="Zavřít menu">Zavřít ✕</button>
+    <nav style="margin-top:1rem;display:flex;flex-direction:column;gap:.4rem">
+      <a href="#home" onclick="closeMobileMenu()">Domů</a>
+      <a href="#foto" onclick="closeMobileMenu()">Foto</a>
+      <a href="#dokumentace" onclick="closeMobileMenu()">Dokumentace</a>
+      <a href="#zadani" onclick="closeMobileMenu()">Zadání</a>
+      <a href="#" onclick="toggleTheme();closeMobileMenu()">Přepnout motiv</a>
+    </nav>
+  </aside>
 
-  <section id="o-nas">
-    <h2>Kdo jsme</h2>
-    <div class="content">
-      <div class="card">
-        <svg viewBox="0 0 64 64">
-          <path d="M32 2C16.5 2 4 14.5 4 30s12.5 28 28 28 28-12.5 28-28S47.5 2 32 2zm0 52c-13.3 0-24-10.7-24-24S18.7 6 32 6s24 10.7 24 24-10.7 24-24 24z"/>
-          <path d="M32 18a12 12 0 100 24 12 12 0 000-24z"/>
-        </svg>
-        <h3>Srdce pro zvířata</h3>
-        <p>Jsme organizace zaměřená na ochranu slepic v ČR. Vzděláváme, zachraňujeme a vytváříme lepší podmínky pro život.</p>
-      </div>
-      <div class="card">
-        <svg viewBox="0 0 64 64">
-          <path d="M32 6l26 16v20c0 10-10 20-26 20S6 52 6 42V22L32 6z"/>
-        </svg>
-        <h3>Bezpečný domov</h3>
-        <p>Spolupracujeme s útulky, farmami a komunitami na zajištění bezpečného a přirozeného prostředí pro slepice.</p>
-      </div>
-    </div>
-  </section>
+  <main class="container" id="home">
+    <section class="hero">
+      <div class="hero-card">
+        <span class="tag">IoT • Embedded • Web</span>
+        <h2>Chytrý kurník — automatizace pro lepší péči o slepice</h2>
+        <p class="lead">Tento projekt kombinuje Arduino / ESP32, senzory (teplota, vlhkost, váha), ovládání krmiva a světla a webové rozhraní, které umožní sledovat a ovládat kurník z prohlížeče.</p>
 
-  <section id="sluzby">
-    <h2>Naše poslání</h2>
-    <div class="content">
-      <div class="card">
-        <svg viewBox="0 0 64 64">
-          <path d="M8 12h48v8H8zM8 28h48v8H8zM8 44h48v8H8z"/>
-        </svg>
-        <h3>Osvěta</h3>
-        <p>Pořádáme přednášky, workshopy a kampaně o etickém chovu a ochraně slepic.</p>
-      </div>
-      <div class="card">
-        <svg viewBox="0 0 64 64">
-          <path d="M32 6l12 36H20L32 6z"/>
-        </svg>
-        <h3>Akce a protesty</h3>
-        <p>Účastníme se veřejných akcí, demonstrací a petičních iniciativ za lepší zákony.</p>
-      </div>
-      <div class="card">
-        <svg viewBox="0 0 64 64">
-          <circle cx="32" cy="32" r="30"/>
-          <path d="M16 32h32M32 16v32"/>
-        </svg>
-        <h3>Připoj se</h3>
-        <p>Každý hlas pomáhá. Staň se členem komunity, dobrovolníkem nebo dárce.</p>
-        <a href="https://mp.spse.cz/" class="button" target="_blank">Chci pomoct</a>
-      </div>
-    </div>
-  </section>
+        <div class="stats" style="margin-top:1rem">
+          <div class="stat"><span class="muted-small">Senzorů</span><strong>6+</strong></div>
+          <div class="stat"><span class="muted-small">Realtime</span><strong>Web</strong></div>
+          <div class="stat"><span class="muted-small">Autonomie</span><strong>24/7</strong></div>
+        </div>
 
-  <section id="kontakt">
-    <h2>Kontakt</h2>
-    <div class="content">
-      <div class="card">
-        <h3>Napiš nám</h3>
-        <p><strong>Email:</strong> info@ochrance-slepis.cz</p>
-        <p><strong>Telefon:</strong> +420 777 666 555</p>
-        <p><strong>Adresa:</strong> Kurníková 12, Praha 1</p>
+        <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap">
+          <a class="btn" href="#dokumentace">Zobrazit dokumentaci</a>
+          <a class="btn ghost" href="#foto">Galerie</a>
+        </div>
       </div>
-    </div>
+
+      <aside>
+        <div class="card">
+          <h3 style="margin-top:0;margin-bottom:.4rem">Rychlá kontrola</h3>
+          <div style="display:flex;gap:.6rem;flex-direction:column">
+            <div class="muted-small">Teplota: <strong id="tempVal">— °C</strong></div>
+            <div class="muted-small">Vlhkost: <strong id="humVal">— %</strong></div>
+            <div class="muted-small">Stav krmiva: <strong id="feedVal">—</strong></div>
+            <small class="muted-small">(Hodnoty jsou ukázkové — připoj svůj HW)</small>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="foto">
+      <h2>Foto</h2>
+      <div class="card">
+        <p class="muted-small">Nahraj sem fotky kurníku, slepic a zapojení. V produkci doporučuji používat vlastní obrázky (JPEG/WebP) a optimalizovat je pro web.</p>
+        <div class="gallery" style="margin-top:1rem">
+          <!-- Nahraď src svými obrázky. Pokud nemáš, můžeš nechat placeholdery. -->
+          <img src="https://picsum.photos/seed/kurnik1/800/600" alt="Kurník - exteriér">
+          <img src="https://picsum.photos/seed/kurnik2/800/600" alt="Slepice v kurníku">
+          <img src="https://picsum.photos/seed/kurnik3/800/600" alt="Elektronika a senzory">
+          <img src="https://picsum.photos/seed/kurnik4/800/600" alt="Zásobník krmiva">
+          <img src="https://picsum.photos/seed/kurnik5/800/600" alt="Nocní režim - osvětlení">
+          <img src="https://picsum.photos/seed/kurnik6/800/600" alt="Schéma zapojení">
+        </div>
+      </div>
+    </section>
+
+    <section id="dokumentace">
+      <h2>Dokumentace</h2>
+      <div class="doc-grid">
+        <div>
+          <div class="card">
+            <h3>Obsah dokumentace</h3>
+            <ol>
+              <li>Popis systému &amp; cíle projektu</li>
+              <li>Hardware: seznam součástek, schémata</li>
+              <li>Software: firmware (Arduino/ESP), web API</li>
+              <li>Instalace a zapojení</li>
+              <li>Testy a měření</li>
+              <li>Závěr a možné rozšíření</li>
+            </ol>
+            <p class="muted-small">Tip: u sekce "Hardware" přidej obrázky schématu a PCB. U softwaru přidej flowchart a ukázkové volání API.</p>
+          </div>
+
+          <div style="margin-top:1rem" class="card">
+            <h3>Firmware (stručně)</h3>
+            <p class="muted-small">Použij ESP32 / ESP8266 pro Wi‑Fi, senzory přes I2C a ADC. Měření posílej přes REST nebo MQTT. Pro zabezpečení použij základní token nebo WPA2 + jednoduché API klíče.</p>
+            <pre style="background:rgba(0,0,0,0.03);padding:.6rem;border-radius:8px;overflow:auto">// Příklad: HTTP POST /api/v1/sensors
+{
+  "temp": 21.4,
+  "hum": 55.2,
+  "feed_level": 78
+}
+            </pre>
+          </div>
+        </div>
+
+        <aside>
+          <div class="card">
+            <h4>Dokumenty ke stažení</h4>
+            <div class="doc-list" style="margin-top:.6rem">
+              <div class="doc-item"><span>Schéma zapojení (PDF)</span><a class="btn" href="#">Stáhnout</a></div>
+              <div class="doc-item"><span>Zadání práce (DOCX)</span><a class="btn" href="#">Stáhnout</a></div>
+              <div class="doc-item"><span>Firmware (ZIP)</span><a class="btn" href="#">Stáhnout</a></div>
+            </div>
+          </div>
+
+          <div style="margin-top:1rem" class="card">
+            <h4>Technické parametry</h4>
+            <ul>
+              <li>Napájení: 12V -> 5V pro MCU</li>
+              <li>Senzory: DHT22 / BME280 / HX711 (váha)</li>
+              <li>Krmivo: servomotor + optický čidlo</li>
+              <li>Komunikace: Wi‑Fi + Web</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="zadani">
+      <h2>Zadání</h2>
+      <div class="card">
+        <h3>Oficiální zadání (vzorek)</h3>
+        <p class="muted-small">Cílem projektu je navrhnout a realizovat autonomní kurník, který zlepší welfare slepic, sníží potřebu manuální obsluhy a umožní vzdálený monitoring. Součástí je HW návrh, SW (firmware) a webové rozhraní s dokumentací.</p>
+
+        <h4>Požadavky:</h4>
+        <ul>
+          <li>Min. 3 typy senzorů (teplota, vlhkost, hmotnost krmiva)</li>
+          <li>Automatické dávkování krmiva</li>
+          <li>Webové rozhraní s přístupem pro uživatele</li>
+          <li>Dokumentace a prezentace pro obhajobu</li>
+        </ul>
+
+        <h4>Kritéria hodnocení</h4>
+        <ol>
+          <li>Funkčnost</li>
+          <li>Kvalita dokumentace</li>
+          <li>Uživatelská přívětivost webu</li>
+          <li>Prezentace a obhajoba</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer>
+      <div class="muted-small">© 2025 Chytrý kurník — připravuje <strong>Tvůj tým</strong></div>
+    </footer>
+  </main>
+
+  <script>
+    // --- Theme handling (prefers + localStorage) ---
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+
+    function setTheme(t){
+      if(t === 'dark'){
+        root.setAttribute('data-theme','dark');
+        themeToggle.textContent = '☀️';
+        themeToggle.setAttribute('aria-pressed','true');
+      } else {
+        root.removeAttribute('data-theme');
+        themeToggle.textContent = '🌙';
+        themeToggle.setAttribute('aria-pressed','false');
+      }
+      try{ localStorage.setItem('ck_theme', t); }catch(e){}
+    }
+
+    // init
+    (function(){
+      const saved = localStorage.getItem('ck_theme');
+      if(saved) return setTheme(saved);
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark ? 'dark' : 'light');
+    })();
+
+    function toggleTheme(){
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      setTheme(isDark ? 'light' : 'dark');
+    }
+
+    themeToggle.addEventListener('click', toggleTheme);
+
+    // --- Mobile menu ---
+    const mobileMenu = document.getElementById('mobileMenu');
+    const openMenu = document.getElementById('openMenu');
+    const closeMenu = document.getElementById('closeMenu');
+
+    function closeMobileMenu(){
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden','true');
+    }
+    function openMobileMenu(){
+      mobileMenu.classList.add('open');
+      mobileMenu.setAttribute('aria-hidden','false');
+    }
+    openMenu.addEventListener('click', openMobileMenu);
+    closeMenu.addEventListener('click', closeMobileMenu);
+    // close when clicking outside
+    document.addEventListener('click', (e)=>{
+      if(!mobileMenu.classList.contains('open')) return;
+      if(e.target.closest('.mobile-menu') || e.target.closest('.menu-btn')) return;
+      closeMobileMenu();
+    });
+
+    // --- Smooth scrolling for anchor links ---
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        const href = this.getAttribute('href');
+        if(href === '#') return;
+        e.preventDefault();
+        const el = document.querySelector(href);
+        if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    });
+
+    // --- Demo: fake sensor values (remove when connecting HW) ---
+    function randomBetween(min,max){return (Math.random()*(max-min)+min).toFixed(1)}
+    setTimeout(()=>{
+      document.getElementById('tempVal').textContent = randomBetween(15,28) + ' °C';
+      document.getElementById('humVal').textContent = randomBetween(40,70) + ' %';
+      document.getElementById('feedVal').textContent = Math.floor(randomBetween(10,100)) + ' %';
+    }, 600);
+
+    // --- Accessibility: close mobile menu with Esc ---
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape') closeMobileMenu();
+    });
+
+    // --- Helpful: export page as single HTML (user can use this to save) ---
+    // Not automatically triggered; included as utility in case you want to add a download button.
+    function downloadCurrentPage(){
+      const html = '<!doctype html>' + document.documentElement.outerHTML;
+      const blob = new Blob([html], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'chytry_kurnik.html';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+  </script>
+</body>
+</html>

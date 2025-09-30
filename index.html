@@ -1,1 +1,152 @@
-<h1>Zdraviiiim</h1>
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ochránce Slepiš</title>
+  <style>
+    /* Reset & základ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      background: #fdfdfd;
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      background: #f4a261;
+      padding: 60px 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+    }
+
+    nav {
+      background: #264653;
+      padding: 10px 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #e9c46a;
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    section h2 {
+      color: #2a9d8f;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    footer {
+      background: #264653;
+      color: #fff;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 40px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #e76f51;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+
+    .button:hover {
+      background: #d65a3b;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Ochránce Slepiš</h1>
+    <p>Bojujeme za práva každého zobáčku</p>
+  </header>
+
+  <nav>
+    <a href="#o-nas">O nás</a>
+    <a href="#mise">Naše mise</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+
+  <section id="o-nas">
+    <h2>O nás</h2>
+    <p>
+      Jsme nezisková organizace Ochránce Slepiš, která vznikla z lásky ke slepicím. Naším cílem je zajistit jim lepší podmínky života, bezpečí, a více prostoru pro přirozené chování.
+    </p>
+    <p>
+      Slepiší blaho je naší prioritou. Podporujeme útulky, vzděláváme veřejnost a bojujeme proti klecovým chovům.
+    </p>
+  </section>
+
+  <section id="mise">
+    <h2>Naše mise</h2>
+    <p>
+      Věříme, že každá slepice má právo na důstojný život. Bojujeme za:
+    </p>
+    <ul>
+      <li>Lepší životní podmínky ve farmách</li>
+      <li>Osvětu o chovu slepic</li>
+      <li>Podporu lokálních iniciativ a útulků</li>
+      <li>Zákaz klecových chovů</li>
+    </ul>
+    <a href="#kontakt" class="button">Přidej se k nám</a>
+  </section>
+
+  <section id="kontakt">
+    <h2>Kontakt</h2>
+    <p>Chceš nás podpořit, přidat se nebo se jen zeptat?</p>
+    <p><strong>Email:</strong> info@ochrance-slepis.cz</p>
+    <p><strong>Telefon:</strong> +420 123 456 789</p>
+    <p><strong>Sídlo:</strong> Kurníková 12, 110 00 Praha</p>
+  </section>
+
+  <footer>
+    &copy; 2025 Ochránce Slepiš | Všechna práva vyhrazena
+  </footer>
+
+</body>
+</html>
+

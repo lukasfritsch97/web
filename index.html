@@ -6,8 +6,8 @@
 <title>Inteligentní kurník — Maturitní projekt</title>
 <style>
 :root{
-  --bg:#ffffff;
-  --surface:#f7f9fc;
+  --bg:#e6f0ff;
+  --surface:#f0f7ff;
   --text:#0f1724;
   --muted:#6b7280;
   --accent:#0ea5e9;
@@ -29,14 +29,14 @@
 html,body{height:100%}
 body{margin:0;font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;background:linear-gradient(180deg,var(--bg), var(--surface));color:var(--text);line-height:1.45;transition: background .35s ease, color .35s ease;}
 .container{max-width:var(--max-width);margin:0 auto;padding:1rem}
-header{position:sticky;top:0;z-index:40;backdrop-filter: blur(6px);background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.45));border-bottom:1px solid rgba(0,0,0,0.04);}
+header{position:sticky;top:0;z-index:40;backdrop-filter: blur(6px);background: linear-gradient(180deg, rgba(230,240,255,0.8), rgba(230,240,255,0.7));border-bottom:1px solid rgba(0,0,0,0.04);}
 [data-theme="dark"] header{background:linear-gradient(180deg, rgba(12,18,28,0.7), rgba(12,18,28,0.55));border-bottom:1px solid rgba(255,255,255,0.03);}
 .nav-row{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem}
 .brand{display:flex;align-items:center;gap:.7rem}
 .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7dd3fc);display:grid;place-items:center;color:white;font-weight:700;box-shadow:var(--shadow);}
 .brand h1{font-size:1.05rem;margin:0}
 nav{display:flex;gap:1rem;align-items:center;position:relative}
-nav a, nav button.dropdown-btn{color:var(--text);text-decoration:none;padding:.45rem .6rem;border-radius:8px;font-weight:600;background:transparent;border:none;cursor:pointer;}
+nav a, nav button.dropdown-btn{color:var(--text);text-decoration:none;padding:.55rem 1rem;border-radius:10px;font-weight:600;background:transparent;border:none;cursor:pointer;}
 nav a:hover, nav button.dropdown-btn:hover{background:var(--glass);}
 .menu-btn{display:none;background:transparent;border:0;padding:.4rem;border-radius:8px}
 
@@ -50,7 +50,7 @@ nav a:hover, nav button.dropdown-btn:hover{background:var(--glass);}
   top:100%;
   left:0;
   background:var(--surface);
-  min-width:180px;
+  min-width:250px;
   box-shadow:var(--shadow);
   border-radius:var(--radius);
   overflow:hidden;
@@ -59,7 +59,7 @@ nav a:hover, nav button.dropdown-btn:hover{background:var(--glass);}
 }
 .dropdown-content a{
   display:block;
-  padding:.5rem .8rem;
+  padding:.6rem 1rem;
   text-decoration:none;
   color:var(--text);
 }
@@ -70,7 +70,7 @@ nav a:hover, nav button.dropdown-btn:hover{background:var(--glass);}
   display:flex;
 }
 
-/* Hero, cards, gallery, footer styling remain unchanged */
+/* Hero, cards, gallery, footer styling */
 .hero{padding:2rem 0}
 .hero-card{background:var(--surface);padding:1.6rem;border-radius:var(--radius);box-shadow:var(--shadow)}
 .tag{display:inline-block;padding:.25rem .6rem;border-radius:999px;background:rgba(0,0,0,0.04);font-size:.8rem;color:var(--muted);margin-bottom:.5rem}
@@ -83,7 +83,7 @@ p.lead{color:var(--muted);margin:0}
 .muted{color:var(--muted)}
 section{margin:2rem 0}
 .card{background:var(--surface);padding:1.2rem;border-radius:12px;box-shadow:var(--shadow)}
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;margin-top:1rem;}
 .gallery img{width:100%;height:200px;object-fit:cover;border-radius:10px;display:block}
 footer{padding:2rem 0;text-align:center;color:var(--muted)}
 @media (max-width:900px){.gallery{grid-template-columns:repeat(2,1fr)}}
@@ -102,7 +102,7 @@ footer{padding:2rem 0;text-align:center;color:var(--muted)}
     </div>
     <nav>
       <a href="#home">Domů</a>
-      <a href="#foto">Foto</a>
+      <a href="#foto">Galerie</a>
       <div class="dropdown">
         <button class="dropdown-btn">Dokumentace ▼</button>
         <div class="dropdown-content" id="docDropdown">
@@ -126,22 +126,10 @@ footer{padding:2rem 0;text-align:center;color:var(--muted)}
        <strong>Třída:</strong> 4.F<br>
        <strong>Vedoucí maturitní práce:</strong> PaedDr. Petr Šeda<br>
        <strong>Kategorie:</strong> Elektro</p>
-    <p class="lead"><strong>Téma:</strong> Maturitní práce je zaměřena na návrh a realizaci modelu inteligentního kurníku, který bude plně automatizovaný a řízen mikropočítačem Arduino. Systém bude zajišťovat otevírání a zavírání dvířek, monitorovat počet slepic uvnitř kurníku a detekovat snesená vejce. Součástí modelu bude také automatické krmítko a osvětlení řízené podle aktuálního času. Napájení zařízení bude řešeno ze sítě 230 V / 50 Hz. Celý systém bude navržen tak, aby tvořil funkční celek, ve kterém budou všechny jednotlivé části správně spolupracovat.</p>
-    <div class="stats">
-      <div class="stat"><span class="muted-small">Součástí</span><strong>Arduino</strong></div>
-      <div class="stat"><span class="muted-small">Automatizace</span><strong>100 %</strong></div>
-      <div class="stat"><span class="muted-small">Školní rok</span><strong>2025/26</strong></div>
+    <p class="lead"><strong>Téma:</strong> Maturitní práce je zaměřena na návrh a realizaci modelu inteligentního kurníku. Systém bude zahrnovat otevření/zavření dvířek, monitorování slepic a detekci vajec, automatické krmítko a osvětlení řízené podle času.</p>
+    <div class="gallery" id="photoGallery">
+      <p class="muted-small">Sem budou postupně přidávány fotografie modelu inteligentního kurníku s datem nahrání.</p>
     </div>
-    <div class="gallery" style="margin-top:1rem">
-      <img src="https://picsum.photos/seed/kurnik_home/800/600" alt="Úvodní foto kurníku">
-    </div>
-  </div>
-</section>
-
-<section id="foto">
-  <h2>Galerie</h2>
-  <div class="card" id="photoGallery">
-    <p class="muted-small">Sem budou postupně přidávány fotografie modelu inteligentního kurníku s datem nahrání.</p>
   </div>
 </section>
 
@@ -149,14 +137,14 @@ footer{padding:2rem 0;text-align:center;color:var(--muted)}
   <h2>Specifikace maturitní práce</h2>
   <div class="card">
     <ol>
-      <li>Model inteligentního kurníku bude automaticky ovládat dvířka.</li>
+      <li>Model inteligentního kurníku bude ovládat dvířka.</li>
       <li>Model bude monitorovat počet slepic uvnitř kurníku.</li>
       <li>Model bude obsahovat automatické krmítko.</li>
       <li>Model bude detekovat snesená vejce.</li>
       <li>Model bude obsahovat osvětlení dle času.</li>
       <li>Model bude napájen ze sítě (230 V / 50 Hz).</li>
       <li>Model bude řízen mikropočítačem Arduino.</li>
-      <li>Systém bude odpovídat specifikaci, bude funkční jako celek a funkční budou všechny jeho části.</li>
+      <li>Systém bude funkční jako celek, všechny části spolupracují.</li>
     </ol>
   </div>
 </section>
@@ -187,11 +175,10 @@ function setTheme(t){
   const prefersDark=window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   setTheme(prefersDark?'dark':'light');
 })();
-function toggleTheme(){
+themeToggle.addEventListener('click',()=>{
   const isDark=root.getAttribute('data-theme')==='dark';
   setTheme(isDark?'light':'dark');
-}
-themeToggle.addEventListener('click',toggleTheme);
+});
 
 // Dynamický seznam dokumentů v drop-down
 const docs = [

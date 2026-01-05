@@ -1,197 +1,167 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Inteligentní kurník — Maturitní projekt</title>
-<style>
-:root{
-  --bg:#e6f0ff;
-  --surface:#f0f7ff;
-  --text:#0f1724;
-  --muted:#6b7280;
-  --accent:#0ea5e9;
-  --glass: rgba(255,255,255,0.6);
-  --radius:12px;
-  --shadow: 0 6px 20px rgba(2,6,23,0.08);
-  --max-width:1100px;
-}
-[data-theme="dark"]{
-  --bg:#0b1220;
-  --surface:#0f1724;
-  --text:#e6eef8;
-  --muted:#9aa6b2;
-  --accent:#ffb86b;
-  --glass: rgba(255,255,255,0.03);
-  --shadow: 0 8px 30px rgba(2,6,23,0.6);
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;background:linear-gradient(180deg,var(--bg), var(--surface));color:var(--text);line-height:1.45;transition: background .35s ease, color .35s ease;}
-.container{max-width:var(--max-width);margin:0 auto;padding:1rem}
-header{position:sticky;top:0;z-index:40;backdrop-filter: blur(6px);background: linear-gradient(180deg, rgba(230,240,255,0.8), rgba(230,240,255,0.7));border-bottom:1px solid rgba(0,0,0,0.04);}
-[data-theme="dark"] header{background:linear-gradient(180deg, rgba(12,18,28,0.7), rgba(12,18,28,0.55));border-bottom:1px solid rgba(255,255,255,0.03);}
-.nav-row{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem}
-.brand{display:flex;align-items:center;gap:.7rem}
-.logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7dd3fc);display:grid;place-items:center;color:white;font-weight:700;box-shadow:var(--shadow);}
-.brand h1{font-size:1.05rem;margin:0}
-nav{display:flex;gap:1rem;align-items:center;position:relative}
-nav a, nav button.dropdown-btn{color:var(--text);text-decoration:none;padding:.55rem 1rem;border-radius:10px;font-weight:600;background:transparent;border:none;cursor:pointer;}
-nav a:hover, nav button.dropdown-btn:hover{background:var(--glass);}
-.menu-btn{display:none;background:transparent;border:0;padding:.4rem;border-radius:8px}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Velká sportovní mela | Fortuna</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Arial Black', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            perspective: 1000px;
+        }
 
-/* Dropdown menu */
-.dropdown{
-  position:relative;
-}
-.dropdown-content{
-  display:none;
-  position:absolute;
-  top:100%;
-  left:0;
-  background:var(--surface);
-  min-width:250px;
-  box-shadow:var(--shadow);
-  border-radius:var(--radius);
-  overflow:hidden;
-  z-index:50;
-  flex-direction:column;
-}
-.dropdown-content a{
-  display:block;
-  padding:.6rem 1rem;
-  text-decoration:none;
-  color:var(--text);
-}
-.dropdown-content a:hover{
-  background:var(--glass);
-}
-.dropdown:hover .dropdown-content{
-  display:flex;
-}
+        /* Skákající 404 */
+        @keyframes bounce404 {
+            0%, 100% { transform: translateY(0) scale(1); text-shadow: 0 5px 15px rgba(246, 224, 0, 0.5); }
+            50% { transform: translateY(-30px) scale(1.1); text-shadow: 0 40px 30px rgba(246, 224, 0, 0.3); }
+        }
 
-/* Hero, cards, gallery, footer styling */
-.hero{padding:2rem 0}
-.hero-card{background:var(--surface);padding:1.6rem;border-radius:var(--radius);box-shadow:var(--shadow)}
-.tag{display:inline-block;padding:.25rem .6rem;border-radius:999px;background:rgba(0,0,0,0.04);font-size:.8rem;color:var(--muted);margin-bottom:.5rem}
-h2{margin:.25rem 0 .5rem 0;font-size:1.6rem}
-p.lead{color:var(--muted);margin:0}
-.stats{display:flex;gap:.6rem;margin-top:.9rem;flex-wrap:wrap}
-.stat{flex:1;min-width:120px;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.45));padding:.7rem;border-radius:10px;text-align:center}
-[data-theme="dark"] .stat{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))}
-.stat strong{display:block;font-size:1.1rem}
-.muted{color:var(--muted)}
-section{margin:2rem 0}
-.card{background:var(--surface);padding:1.2rem;border-radius:12px;box-shadow:var(--shadow)}
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;margin-top:1rem;}
-.gallery img{width:100%;height:200px;object-fit:cover;border-radius:10px;display:block}
-footer{padding:2rem 0;text-align:center;color:var(--muted)}
-@media (max-width:900px){.gallery{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:600px){nav{display:none}.menu-btn{display:block}.gallery img{height:150px}.logo{width:40px;height:40px}}
-</style>
+        .error-code {
+            font-size: 150px;
+            font-weight: 900;
+            color: #f6e000; /* Fortuna Yellow */
+            margin: 0;
+            display: inline-block;
+            animation: bounce404 0.8s infinite ease-in-out;
+            cursor: pointer;
+        }
+
+        .content {
+            position: relative;
+            z-index: 100;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 50px;
+            border-radius: 30px;
+            border: 4px solid #f6e000;
+            box-shadow: 0 0 50px rgba(246, 224, 0, 0.2);
+            pointer-events: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #f6e000;
+            color: #000;
+            text-decoration: none;
+            padding: 18px 40px;
+            font-weight: bold;
+            border-radius: 50px;
+            text-transform: uppercase;
+            margin-top: 25px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1.2rem;
+        }
+
+        .btn:hover {
+            transform: scale(1.1) rotate(-2deg);
+            background-color: #fff;
+            box-shadow: 0 0 20px #fff;
+        }
+
+        /* Styl pro poletující a interaktivní předměty */
+        .sport-item {
+            position: absolute;
+            font-size: 50px;
+            user-select: none;
+            cursor: crosshair;
+            z-index: 1;
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+        }
+
+        p { font-size: 1.5rem; margin: 10px 0; }
+    </style>
 </head>
 <body>
-<header>
-  <div class="container nav-row">
-    <div class="brand">
-      <div class="logo">IK</div>
-      <div>
-        <h1>Inteligentní kurník</h1>
-        <div class="muted-small">Maturitní projekt • Lukáš Fritsch</div>
-      </div>
+
+    <div class="content">
+        <div class="error-code">404</div>
+        <h2>TO JE OFSAJD!</h2>
+        <p>Váš útok na tuto stránku skončil faulem.</p>
+        <a href="/" class="btn">Zpět do zápasu</a>
     </div>
-    <nav>
-      <a href="#home">Domů</a>
-      <a href="#foto">Galerie</a>
-      <div class="dropdown">
-        <button class="dropdown-btn">Dokumentace ▼</button>
-        <div class="dropdown-content" id="docDropdown">
-          <!-- Dynamické dokumenty zde -->
-        </div>
-      </div>
-      <a href="#zadani">Zadání</a>
-      <button id="themeToggle" class="btn" aria-pressed="false">🌙</button>
-    </nav>
-  </div>
-</header>
 
-<main class="container" id="home">
-<section class="hero">
-  <div class="hero-card">
-    <span class="tag">Maturitní práce</span>
-    <h2>Inteligentní kurník</h2>
-    <p><strong>Jméno a příjmení žáka:</strong> Lukáš Fritsch<br>
-       <strong>Obor:</strong> Informační technologie, Hardware a sítě<br>
-       <strong>Školní rok:</strong> 2025/2026<br>
-       <strong>Třída:</strong> 4.F<br>
-       <strong>Vedoucí maturitní práce:</strong> PaedDr. Petr Šeda<br>
-       <strong>Kategorie:</strong> Elektro</p>
-    <p class="lead"><strong>Téma:</strong> Maturitní práce je zaměřena na návrh a realizaci modelu inteligentního kurníku. Systém bude zahrnovat otevření/zavření dvířek, monitorování slepic a detekci vajec, automatické krmítko a osvětlení řízené podle času.</p>
-    <div class="gallery" id="photoGallery">
-      <p class="muted-small">Sem budou postupně přidávány fotografie modelu inteligentního kurníku s datem nahrání.</p>
-    </div>
-  </div>
-</section>
+    <script>
+        const itemsList = ['⚽', '🏒', '🏀', '🎾', '🥅', '👟', '🏐', '🥎', '⛳'];
+        const itemCount = 30;
+        const items = [];
 
-<section id="zadani">
-  <h2>Specifikace maturitní práce</h2>
-  <div class="card">
-    <ol>
-      <li>Model inteligentního kurníku bude ovládat dvířka.</li>
-      <li>Model bude monitorovat počet slepic uvnitř kurníku.</li>
-      <li>Model bude obsahovat automatické krmítko.</li>
-      <li>Model bude detekovat snesená vejce.</li>
-      <li>Model bude obsahovat osvětlení dle času.</li>
-      <li>Model bude napájen ze sítě (230 V / 50 Hz).</li>
-      <li>Model bude řízen mikropočítačem Arduino.</li>
-      <li>Systém bude funkční jako celek, všechny části spolupracují.</li>
-    </ol>
-  </div>
-</section>
+        // Inicializace předmětů
+        for (let i = 0; i < itemCount; i++) {
+            const el = document.createElement('div');
+            el.className = 'sport-item';
+            el.innerText = itemsList[Math.floor(Math.random() * itemsList.length)];
+            document.body.appendChild(el);
 
-<footer>
-  <div class="muted-small">© 2025 Lukáš Fritsch — Inteligentní kurník</div>
-</footer>
-</main>
+            const data = {
+                el: el,
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                vx: (Math.random() - 0.5) * 4,
+                vy: (Math.random() - 0.5) * 4,
+                rotation: Math.random() * 360,
+                vr: (Math.random() - 0.5) * 10
+            };
+            items.push(data);
+        }
 
-<script>
-const root=document.documentElement;
-const themeToggle=document.getElementById('themeToggle');
-function setTheme(t){
-  if(t==='dark'){
-    root.setAttribute('data-theme','dark');
-    themeToggle.textContent='☀️';
-    themeToggle.setAttribute('aria-pressed','true');
-  }else{
-    root.removeAttribute('data-theme');
-    themeToggle.textContent='🌙';
-    themeToggle.setAttribute('aria-pressed','false');
-  }
-  try{localStorage.setItem('ik_theme',t);}catch(e){}
-}
-(function(){
-  const saved=localStorage.getItem('ik_theme');
-  if(saved) return setTheme(saved);
-  const prefersDark=window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  setTheme(prefersDark?'dark':'light');
-})();
-themeToggle.addEventListener('click',()=>{
-  const isDark=root.getAttribute('data-theme')==='dark';
-  setTheme(isDark?'light':'dark');
-});
+        // Fyzika a pohyb
+        function update() {
+            items.forEach(item => {
+                // Přičtení rychlosti k pozici
+                item.x += item.vx;
+                item.y += item.vy;
+                item.rotation += item.vr;
 
-// Dynamický seznam dokumentů v drop-down
-const docs = [
-  {name:"Zadání práce DOCX", date:"2025-09-20", url:"#"},
-  {name:"Dokumentace verze 1 PDF", date:"2025-09-25", url:"#"}
-];
-const docDropdown=document.getElementById('docDropdown');
-docs.forEach(d=>{
-  const a=document.createElement('a');
-  a.href=d.url;
-  a.textContent=`${d.name} (${d.date})`;
-  docDropdown.appendChild(a);
-});
-</script>
+                // Odraz od stěn
+                if (item.x < 0 || item.x > window.innerWidth - 60) item.vx *= -1;
+                if (item.y < 0 || item.y > window.innerHeight - 60) item.vy *= -1;
+
+                // Aplikace transformace
+                item.el.style.transform = `translate(${item.x}px, ${item.y}px) rotate(${item.rotation}deg)`;
+            });
+            requestAnimationFrame(update);
+        }
+
+        // Detekce "odpálení" myší
+        window.addEventListener('mousemove', (e) => {
+            items.forEach(item => {
+                const dx = item.x + 30 - e.clientX;
+                const dy = item.y + 30 - e.clientY;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+
+                if (dist < 100) { // Pokud je myš blízko (100px)
+                    const angle = Math.atan2(dy, dx);
+                    const force = (100 - dist) * 0.2;
+                    item.vx += Math.cos(angle) * force;
+                    item.vy += Math.sin(angle) * force;
+                    item.vr += force * 2; // Roztočení při nárazu
+                }
+            });
+        });
+
+        update();
+
+        // Responzivita - reset při změně velikosti okna
+        window.addEventListener('resize', () => {
+            items.forEach(item => {
+                item.x = Math.random() * window.innerWidth;
+                item.y = Math.random() * window.innerHeight;
+            });
+        });
+    </script>
 </body>
 </html>

@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Velká sportovní mela | Fortuna</title>
+    <title>404 - Fortuna Sportovní Smršť</title>
     <style>
+        :root {
+            --yellow: #f6e000;
+            --black: #000000;
+        }
+
         body {
-            background-color: #000;
-            color: #fff;
+            background-color: var(--black);
+            color: white;
             font-family: 'Arial Black', sans-serif;
             margin: 0;
             overflow: hidden;
@@ -15,153 +20,195 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            perspective: 1000px;
         }
 
-        /* Skákající 404 */
-        @keyframes bounce404 {
-            0%, 100% { transform: translateY(0) scale(1); text-shadow: 0 5px 15px rgba(246, 224, 0, 0.5); }
-            50% { transform: translateY(-30px) scale(1.1); text-shadow: 0 40px 30px rgba(246, 224, 0, 0.3); }
+        /* POZADÍ - Létající předměty */
+        .bg-item {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.3;
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        /* HLAVNÍ KONTEJNER */
+        .main-stage {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* SKÁKAJÍCÍ 404 SE ZÁŘÍ */
+        .error-wrapper {
+            position: relative;
+            margin-bottom: 20px;
         }
 
         .error-code {
-            font-size: 150px;
-            font-weight: 900;
-            color: #f6e000; /* Fortuna Yellow */
+            font-size: 160px;
+            color: var(--yellow);
             margin: 0;
-            display: inline-block;
-            animation: bounce404 0.8s infinite ease-in-out;
-            cursor: pointer;
-        }
-
-        .content {
             position: relative;
-            z-index: 100;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.85);
-            padding: 50px;
-            border-radius: 30px;
-            border: 4px solid #f6e000;
-            box-shadow: 0 0 50px rgba(246, 224, 0, 0.2);
-            pointer-events: auto;
+            z-index: 5;
+            animation: jump 0.8s infinite alternate ease-in-out;
+            /* Záře pod číslem */
+            filter: drop-shadow(0 0 20px rgba(246, 224, 0, 0.6));
         }
 
+        .glow-shadow {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 40px;
+            background: radial-gradient(ellipse at center, rgba(246, 224, 0, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: shadow-scale 0.8s infinite alternate ease-in-out;
+        }
+
+        /* TLAČÍTKO */
         .btn {
-            display: inline-block;
-            background-color: #f6e000;
-            color: #000;
+            background-color: var(--yellow);
+            color: black;
+            padding: 20px 50px;
             text-decoration: none;
-            padding: 18px 40px;
             font-weight: bold;
-            border-radius: 50px;
+            border-radius: 10px;
             text-transform: uppercase;
-            margin-top: 25px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-size: 1.2rem;
+            transition: 0.3s;
+            position: relative;
+            z-index: 20;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
         .btn:hover {
-            transform: scale(1.1) rotate(-2deg);
-            background-color: #fff;
-            box-shadow: 0 0 20px #fff;
+            background-color: white;
+            transform: scale(1.05);
         }
 
-        /* Styl pro poletující a interaktivní předměty */
-        .sport-item {
+        /* CHLUPATÝ MASKOT POD TLAČÍTKEM */
+        .maskot-container {
+            margin-top: 30px;
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .maskot {
+            width: 100px;
+            height: 100px;
+            background: repeating-linear-gradient(45deg, var(--yellow), var(--yellow) 5px, var(--black) 5px, var(--black) 10px);
+            border-radius: 50% 50% 45% 45%;
+            position: relative;
+            margin: 0 auto;
+            border: 2px solid var(--yellow);
+            box-shadow: 0 0 15px var(--yellow);
+        }
+
+        .eye {
             position: absolute;
-            font-size: 50px;
-            user-select: none;
-            cursor: crosshair;
-            z-index: 1;
-            transition: transform 0.1s ease-out;
-            will-change: transform;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
+            width: 15px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 25px;
+        }
+        .eye.left { left: 25px; }
+        .eye.right { right: 25px; }
+        .eye::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: black;
+            border-radius: 50%;
+            bottom: 3px;
+            left: 3px;
         }
 
-        p { font-size: 1.5rem; margin: 10px 0; }
+        /* Ruka co se drbe */
+        .hand {
+            position: absolute;
+            font-size: 35px;
+            top: -10px;
+            right: -10px;
+            animation: scratch-head 1.5s infinite ease-in-out;
+            transform-origin: bottom left;
+        }
+
+        /* ANIMACE */
+        @keyframes jump {
+            from { transform: translateY(0); }
+            to { transform: translateY(-50px); }
+        }
+
+        @keyframes shadow-scale {
+            from { transform: translateX(-50%) scale(1); opacity: 1; }
+            to { transform: translateX(-50%) scale(0.5); opacity: 0.3; }
+        }
+
+        @keyframes scratch-head {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-30deg) translate(-10px, 5px); }
+        }
+
+        @keyframes float-around {
+            from { transform: translate(0, 0) rotate(0deg); }
+            to { transform: translate(var(--mx), var(--my)) rotate(360deg); }
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="content">
-        <div class="error-code">404</div>
-        <h2>TO JE OFSAJD!</h2>
-        <p>Váš útok na tuto stránku skončil faulem.</p>
-        <a href="/" class="btn">Zpět do zápasu</a>
+    <div id="bg-layer"></div>
+
+    <div class="main-stage">
+        <div class="error-wrapper">
+            <h1 class="error-code">404</h1>
+            <div class="glow-shadow"></div>
+        </div>
+
+        <h2 style="color: var(--yellow); margin-bottom: 30px;">Tenhle kurz jsme nevypsali!</h2>
+        
+        <a href="/" class="btn">Zpět do hry</a>
+
+        <div class="maskot-container">
+            <div class="maskot">
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+                <div class="hand">🤔</div>
+            </div>
+        </div>
     </div>
 
     <script>
-        const itemsList = ['⚽', '🏒', '🏀', '🎾', '🥅', '👟', '🏐', '🥎', '⛳'];
-        const itemCount = 30;
-        const items = [];
+        const items = ['⚽', '🏒', '🏀', '🎾', '🥅', '👟', '🏐', '🥎'];
+        const layer = document.getElementById('bg-layer');
 
-        // Inicializace předmětů
-        for (let i = 0; i < itemCount; i++) {
+        for (let i = 0; i < 25; i++) {
             const el = document.createElement('div');
-            el.className = 'sport-item';
-            el.innerText = itemsList[Math.floor(Math.random() * itemsList.length)];
-            document.body.appendChild(el);
-
-            const data = {
-                el: el,
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                vx: (Math.random() - 0.5) * 4,
-                vy: (Math.random() - 0.5) * 4,
-                rotation: Math.random() * 360,
-                vr: (Math.random() - 0.5) * 10
-            };
-            items.push(data);
+            el.className = 'bg-item';
+            el.innerText = items[Math.floor(Math.random() * items.length)];
+            
+            // Náhodná pozice
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.top = Math.random() * 100 + 'vh';
+            
+            // Náhodný pohyb
+            el.style.setProperty('--mx', (Math.random() - 0.5) * 400 + 'px');
+            el.style.setProperty('--my', (Math.random() - 0.5) * 400 + 'px');
+            
+            el.style.animation = `float-around ${10 + Math.random() * 20}s infinite alternate ease-in-out`;
+            
+            layer.appendChild(el);
         }
-
-        // Fyzika a pohyb
-        function update() {
-            items.forEach(item => {
-                // Přičtení rychlosti k pozici
-                item.x += item.vx;
-                item.y += item.vy;
-                item.rotation += item.vr;
-
-                // Odraz od stěn
-                if (item.x < 0 || item.x > window.innerWidth - 60) item.vx *= -1;
-                if (item.y < 0 || item.y > window.innerHeight - 60) item.vy *= -1;
-
-                // Aplikace transformace
-                item.el.style.transform = `translate(${item.x}px, ${item.y}px) rotate(${item.rotation}deg)`;
-            });
-            requestAnimationFrame(update);
-        }
-
-        // Detekce "odpálení" myší
-        window.addEventListener('mousemove', (e) => {
-            items.forEach(item => {
-                const dx = item.x + 30 - e.clientX;
-                const dy = item.y + 30 - e.clientY;
-                const dist = Math.sqrt(dx*dx + dy*dy);
-
-                if (dist < 100) { // Pokud je myš blízko (100px)
-                    const angle = Math.atan2(dy, dx);
-                    const force = (100 - dist) * 0.2;
-                    item.vx += Math.cos(angle) * force;
-                    item.vy += Math.sin(angle) * force;
-                    item.vr += force * 2; // Roztočení při nárazu
-                }
-            });
-        });
-
-        update();
-
-        // Responzivita - reset při změně velikosti okna
-        window.addEventListener('resize', () => {
-            items.forEach(item => {
-                item.x = Math.random() * window.innerWidth;
-                item.y = Math.random() * window.innerHeight;
-            });
-        });
     </script>
 </body>
 </html>
